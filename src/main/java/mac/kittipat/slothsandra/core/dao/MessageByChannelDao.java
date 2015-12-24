@@ -3,9 +3,11 @@ package mac.kittipat.slothsandra.core.dao;
 import mac.kittipat.slothsandra.core.model.MessageByChannel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.cassandra.core.CassandraTemplate;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+@Repository
 public class MessageByChannelDao {
 
     @Autowired
