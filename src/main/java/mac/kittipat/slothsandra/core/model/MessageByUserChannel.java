@@ -3,20 +3,20 @@ package mac.kittipat.slothsandra.core.model;
 import org.springframework.data.cassandra.mapping.PrimaryKey;
 import org.springframework.data.cassandra.mapping.Table;
 
-@Table
+@Table(value = "message_by_user_channel")
 public class MessageByUserChannel {
 
     @PrimaryKey
-    private MessageByChannelKey messageByChannelKey;
+    private MessageByUserChannelKey messageByUserChannelKey;
 
     private String message;
 
-    public MessageByChannelKey getMessageByChannelKey() {
-        return messageByChannelKey;
+    public MessageByUserChannelKey getMessageByUserChannelKey() {
+        return messageByUserChannelKey;
     }
 
-    public void setMessageByChannelKey(MessageByChannelKey messageByChannelKey) {
-        this.messageByChannelKey = messageByChannelKey;
+    public void setMessageByUserChannelKey(MessageByUserChannelKey messageByUserChannelKey) {
+        this.messageByUserChannelKey = messageByUserChannelKey;
     }
 
     public String getMessage() {

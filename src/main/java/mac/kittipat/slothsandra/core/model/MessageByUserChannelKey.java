@@ -5,10 +5,11 @@ import org.springframework.cassandra.core.PrimaryKeyType;
 import org.springframework.data.cassandra.mapping.PrimaryKeyClass;
 import org.springframework.data.cassandra.mapping.PrimaryKeyColumn;
 
+import java.io.Serializable;
 import java.util.UUID;
 
 @PrimaryKeyClass
-public class MessageByUserChannelKey {
+public class MessageByUserChannelKey implements Serializable {
 
     @PrimaryKeyColumn(name = "channel_name", ordinal = 0, type = PrimaryKeyType.PARTITIONED)
     private String channelName;

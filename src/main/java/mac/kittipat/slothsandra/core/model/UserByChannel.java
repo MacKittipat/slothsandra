@@ -3,7 +3,7 @@ package mac.kittipat.slothsandra.core.model;
 import org.springframework.data.cassandra.mapping.PrimaryKey;
 import org.springframework.data.cassandra.mapping.Table;
 
-@Table
+@Table(value = "user_by_channel")
 public class UserByChannel {
 
     @PrimaryKey
