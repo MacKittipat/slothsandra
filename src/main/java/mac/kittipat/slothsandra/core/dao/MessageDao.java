@@ -1,0 +1,59 @@
+package mac.kittipat.slothsandra.core.dao;
+
+import com.datastax.driver.core.BatchStatement;
+import com.datastax.driver.core.querybuilder.Insert;
+import com.datastax.driver.core.querybuilder.QueryBuilder;
+import com.datastax.driver.core.utils.UUIDs;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.cassandra.core.CassandraTemplate;
+import org.springframework.stereotype.Repository;
+
+import java.util.Date;
+import java.util.UUID;
+
+@Repository
+public class MessageDao {
+
+    @Autowired
+    private CassandraTemplate cassandraTemplate;
+
+    public void insert(String channelName, String username, String message) {
+
+        Date date = new Date();
+        UUID uuidTime = UUIDs.timeBased();
+
+        // This table might duplicate if user send multiple messages to the same channel.
+        Insert insertChannel = QueryBuilder.insertInto("channel");
+        insertChannel.value("slack_name", "abctech");
+        insertChannel.value("channel_name", channelName);
+//        insertChannel.ifNotExists();
+
+        // This table might duplicate if user send multiple messageas to the same channel.
+        Insert insertUserByChannel = QueryBuilder.insertInto("user_by_channel");
+        insertUserByChannel.value("channel_name", channelName);
+        insertUserByChannel.value("username", username);
+//        insertUserByChannel.ifNotExists();
+
+        Insert insertMessageByChannel = QueryBuilder.insertInto("message_by_channel");
+        insertMessageByChannel.value("channel_name", channelName);
+        insertMessageByChannel.value("uuid_time", uuidTime);
+        insertMessageByChannel.value("created_time", date.getTime());
+        insertMessageByChannel.value("message", message);
+
+        Insert insertMessageByUserChannel = QueryBuilder.insertInto("message_by_user_channel");
+        insertMessageByUserChannel.value("channel_name", channelName);
+        insertMessageByUserChannel.value("username", username);
+        insertMessageByUserChannel.value("uuid_time", uuidTime);
+        insertMessageByUserChannel.value("created_time", date.getTime());
+        insertMessageByUserChannel.value("message", message);
+
+        // Use batch for atomicity. Keep data in all table consistency.
+        BatchStatement batch = new BatchStatement();
+        batch.add(insertChannel);
+        batch.add(insertUserByChannel);
+        batch.add(insertMessageByChannel);
+        batch.add(insertMessageByUserChannel);
+
+        cassandraTemplate.execute(batch);
+    }
+}
