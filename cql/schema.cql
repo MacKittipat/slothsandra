@@ -17,19 +17,19 @@ WITH CLUSTERING ORDER BY (username ASC);
 
 CREATE TABLE message_by_channel (
     channel_name text,
-    timeuuid timeuuid,
-    createdtime timestamp,
+    uuid_time timeuuid,
+    created_time timestamp,
     message text,
-    PRIMARY KEY ((channel_name), timeuuid, createdtime)
+    PRIMARY KEY ((channel_name), uuid_time, created_time)
 )
-WITH CLUSTERING ORDER BY (timeuuid DESC, createdtime DESC);
+WITH CLUSTERING ORDER BY (uuid_time DESC, created_time DESC);
 
 CREATE TABLE message_by_user_channel (
     channel_name text,
     username text,
-    timeuuid timeuuid,
-    createdtime timestamp,
+    uuid_time timeuuid,
+    created_time timestamp,
     message text,
-    PRIMARY KEY ((channel_name, username), timeuuid, createdtime)
+    PRIMARY KEY ((channel_name, username), uuid_time, created_time)
 )
-WITH CLUSTERING ORDER BY (timeuuid DESC, createdtime DESC);
+WITH CLUSTERING ORDER BY (uuid_time DESC, created_time DESC);
