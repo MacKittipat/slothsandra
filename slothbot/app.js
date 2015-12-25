@@ -17,6 +17,61 @@ var logger = new (winston.Logger)({
 
 var slack = new Slack(token, autoReconnect, autoMark);
 
+// Fetch list of channels from Slack.
+var slackChannels = [];
+slack._apiCall('channels.list', {'token':token}, function(data) {
+    if(data.ok) {
+        for(var i=0; i<data.channels.length; i++) {
+            var slackChannel = data.channels[i];
+            // Check if slothboth is member in channel.
+            if(slackChannel.is_member) {
+                slackChannels.push({
+                    'channelKey': {
+                        'slackName': 'abctech',
+                        'channelId': slackChannel.id,
+                        'channelName': slackChannel.name
+                    }
+                });
+            }
+        }
+        // Send list of channels to Slothsandra.
+        rest.postJson(slothsandraBaseUrl + '/api/channels', slackChannels)
+        .on('success', function(data, response) {
+            if (response.statusCode == 201) {
+                logger.info('Send channels to Slothsandra success');
+            }
+        }).on('error', function(err, response) {
+            logger.error("Error when send channels to Slothsandra. (" + err + ")");
+        });
+    }
+});
+
+// Fetch list of users from Slack.
+var slackUsers = [];
+slack._apiCall('users.list', {'token':token}, function(data) {
+    if(data.ok) {
+        for(var i=0; i<data.members.length; i++) {
+            var slackUser = data.members[i];
+            slackUsers.push({
+                'userKey': {
+                    'slackName': 'abctech',
+                    'userId': slackUser.id,
+                    'username': slackUser.name
+                }
+            });
+        }
+        // Send list of users to Slothsandra.
+        rest.postJson(slothsandraBaseUrl + '/api/users', slackUsers)
+            .on('success', function(data, response) {
+                if (response.statusCode == 201) {
+                    logger.info('Send users to Slothsandra success');
+                }
+            }).on('error', function(err, response) {
+            logger.error("Error when send users to Slothsandra. (" + err + ")");
+        });
+    }
+});
+
 logger.info('Logging into Slack');
 slack.login();
 
@@ -33,7 +88,7 @@ slack.on('message', function(message) {
     var channel = slack.getChannelGroupOrDMByID(message.channel);
     if(user && channel && message) {
         logger.debug('[' + channel.name + '] ' + user.name + ' : ' + message.text);
-        // Send message to slothsandra
+        // Send message to Slothsandra
         rest.post(slothsandraBaseUrl + '/api/messages', {
             data: {
                 channelName: channel.name,
