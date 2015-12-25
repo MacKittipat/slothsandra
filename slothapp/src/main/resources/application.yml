@@ -1,3 +1,7 @@
 server:
   port: 9000
   context-path: /slothsandra
+
+spring:
+  freemarker:
+    cache: false
