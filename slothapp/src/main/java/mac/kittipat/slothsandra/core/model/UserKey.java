@@ -8,16 +8,16 @@ import org.springframework.data.cassandra.mapping.PrimaryKeyColumn;
 import java.io.Serializable;
 
 @PrimaryKeyClass
-public class ChannelKey implements Serializable {
+public class UserKey implements Serializable {
 
     @PrimaryKeyColumn(name = "slack_name", ordinal = 0, type = PrimaryKeyType.PARTITIONED)
     private String slackName;
 
-    @PrimaryKeyColumn(name = "channel_id", ordinal = 1, type = PrimaryKeyType.CLUSTERED)
-    private String channelId;
+    @PrimaryKeyColumn(name = "user_id", ordinal = 1, type = PrimaryKeyType.CLUSTERED)
+    private String userId;
 
-    @PrimaryKeyColumn(name = "channel_name", ordinal = 1, type = PrimaryKeyType.CLUSTERED, ordering = Ordering.ASCENDING)
-    private String channelName;
+    @PrimaryKeyColumn(name = "username", ordinal = 2, type = PrimaryKeyType.CLUSTERED, ordering = Ordering.ASCENDING)
+    private String username;
 
     public String getSlackName() {
         return slackName;
@@ -27,19 +27,19 @@ public class ChannelKey implements Serializable {
         this.slackName = slackName;
     }
 
-    public String getChannelId() {
-        return channelId;
+    public String getUserId() {
+        return userId;
     }
 
-    public void setChannelId(String channelId) {
-        this.channelId = channelId;
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 
-    public String getChannelName() {
-        return channelName;
+    public String getUsername() {
+        return username;
     }
 
-    public void setChannelName(String channelName) {
-        this.channelName = channelName;
+    public void setUsername(String username) {
+        this.username = username;
     }
 }

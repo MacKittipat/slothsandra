@@ -3,10 +3,19 @@ CREATE KEYSPACE slothsandra
 
 CREATE TABLE channel (
     slack_name text,
+    channel_id text,
     channel_name text,
-    PRIMARY KEY ((slack_name), channel_name)
+    PRIMARY KEY ((slack_name), channel_id, channel_name)
 )
 WITH CLUSTERING ORDER BY (channel_name ASC);
+
+CREATE TABLE user (
+    slack_name text,
+    user_id text,
+    username text,
+    PRIMARY KEY ((slack_name), user_id, username)
+)
+WITH CLUSTERING ORDER BY (username ASC);
 
 CREATE TABLE user_by_channel (
     channel_name text,
