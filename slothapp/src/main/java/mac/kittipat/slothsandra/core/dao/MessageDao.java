@@ -22,10 +22,6 @@ public class MessageDao {
         Date date = new Date();
         UUID uuidTime = UUIDs.timeBased();
 
-        Insert insertChannel = QueryBuilder.insertInto("channel");
-        insertChannel.value("slack_name", "abctech");
-        insertChannel.value("channel_name", channelName);
-
         Insert insertUserByChannel = QueryBuilder.insertInto("user_by_channel");
         insertUserByChannel.value("channel_name", channelName);
         insertUserByChannel.value("username", username);
@@ -46,7 +42,6 @@ public class MessageDao {
 
         // Use batch for atomicity. Keep data in all table consistency.
         BatchStatement batch = new BatchStatement();
-        batch.add(insertChannel);
         batch.add(insertUserByChannel);
         batch.add(insertMessageByChannel);
         batch.add(insertMessageByUserChannel);
