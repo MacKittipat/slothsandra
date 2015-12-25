@@ -45,7 +45,7 @@ slack.on('message', function(message) {
                 logger.debug('Send message \"[' + channel.name + '] ' + user.name + ' : ' + message.text + '\" to slothsandra success');
             }
         }).on('error', function(err, response) {
-            logger.error(err);
+            logger.error("Error when send message to Slothsandra. (" + err + ")");
         });
     }
 });
