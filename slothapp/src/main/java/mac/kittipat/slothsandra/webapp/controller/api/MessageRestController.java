@@ -5,6 +5,7 @@ import mac.kittipat.slothsandra.core.dao.MessageByUserChannelDao;
 import mac.kittipat.slothsandra.core.dao.MessageDao;
 import mac.kittipat.slothsandra.core.model.MessageByChannel;
 import mac.kittipat.slothsandra.core.model.MessageByUserChannel;
+import mac.kittipat.slothsandra.webapp.service.SlackMessageFormatter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,7 +15,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.annotation.Resource;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping(value = "/api")
@@ -29,13 +32,21 @@ public class MessageRestController {
     @Autowired
     private MessageByUserChannelDao messageByUserChannelDao;
 
+    @Autowired
+    private SlackMessageFormatter slackMessageFormatter;
+
+    @Resource
+    private Map<String, String> channelIdMap;
+
+    @Resource
+    private Map<String, String> userIdMap;
+
     @RequestMapping(value = "/messages", method = RequestMethod.POST)
     public ResponseEntity create(@RequestParam String channelName,
                                  @RequestParam String username,
                                  @RequestParam String message) {
 
-        messageDao.insert(channelName, username, message);
-
+        messageDao.insert(channelName, username, slackMessageFormatter.toPlainText(message, channelIdMap, userIdMap));
         return new ResponseEntity(HttpStatus.CREATED);
     }
 
