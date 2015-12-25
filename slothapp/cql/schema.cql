@@ -7,7 +7,7 @@ CREATE TABLE channel (
     channel_name text,
     PRIMARY KEY ((slack_name), channel_id, channel_name)
 )
-WITH CLUSTERING ORDER BY (channel_name ASC);
+WITH CLUSTERING ORDER BY (channel_id ASC, channel_name ASC);
 
 CREATE TABLE user (
     slack_name text,
@@ -15,7 +15,7 @@ CREATE TABLE user (
     username text,
     PRIMARY KEY ((slack_name), user_id, username)
 )
-WITH CLUSTERING ORDER BY (username ASC);
+WITH CLUSTERING ORDER BY (user_id ASC, username ASC);
 
 CREATE TABLE user_by_channel (
     channel_name text,
