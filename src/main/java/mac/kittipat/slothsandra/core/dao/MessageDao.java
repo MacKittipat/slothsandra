@@ -22,22 +22,19 @@ public class MessageDao {
         Date date = new Date();
         UUID uuidTime = UUIDs.timeBased();
 
-        // This table might duplicate if user send multiple messages to the same channel.
         Insert insertChannel = QueryBuilder.insertInto("channel");
         insertChannel.value("slack_name", "abctech");
         insertChannel.value("channel_name", channelName);
-//        insertChannel.ifNotExists();
 
-        // This table might duplicate if user send multiple messageas to the same channel.
         Insert insertUserByChannel = QueryBuilder.insertInto("user_by_channel");
         insertUserByChannel.value("channel_name", channelName);
         insertUserByChannel.value("username", username);
-//        insertUserByChannel.ifNotExists();
 
         Insert insertMessageByChannel = QueryBuilder.insertInto("message_by_channel");
         insertMessageByChannel.value("channel_name", channelName);
         insertMessageByChannel.value("uuid_time", uuidTime);
         insertMessageByChannel.value("created_time", date.getTime());
+        insertMessageByChannel.value("username", username);
         insertMessageByChannel.value("message", message);
 
         Insert insertMessageByUserChannel = QueryBuilder.insertInto("message_by_user_channel");

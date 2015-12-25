@@ -9,6 +9,8 @@ public class MessageByChannel {
     @PrimaryKey
     private MessageByChannelKey messageByChannelKey;
 
+    private String username;
+
     private String message;
 
     public MessageByChannelKey getMessageByChannelKey() {
@@ -17,6 +19,14 @@ public class MessageByChannel {
 
     public void setMessageByChannelKey(MessageByChannelKey messageByChannelKey) {
         this.messageByChannelKey = messageByChannelKey;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getMessage() {

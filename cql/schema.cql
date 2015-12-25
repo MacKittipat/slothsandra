@@ -19,6 +19,7 @@ CREATE TABLE message_by_channel (
     channel_name text,
     uuid_time timeuuid,
     created_time timestamp,
+    username text,
     message text,
     PRIMARY KEY ((channel_name), uuid_time, created_time)
 )
