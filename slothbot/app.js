@@ -1,20 +1,23 @@
 var Slack   = require('slack-client');
 var winston  = require('winston');
 var rest    = require('restler');
+var config = require('config');
+
+var token               = config.get('slothbot.slack.token');
+var autoReconnect       = true;
+var autoMark            = true;
+var slothsandraBaseUrl  = config.get('slothbot.slothsandra.base-url');
+var winstonLogLevel     = config.get('slothbot.winston.log.level');
 
 var logger = new (winston.Logger)({
     transports: [
-        new (winston.transports.Console)({ level: 'debug' })
+        new (winston.transports.Console)({ level: winstonLogLevel })
     ]
 });
 
-var token           = 'xoxb-17364172837-T218G26lM8k6cAuzQRvsr7do';
-var autoReconnect   = true;
-var autoMark        = true;
-
 var slack = new Slack(token, autoReconnect, autoMark);
 
-logger.info('Logging into Slack')
+logger.info('Logging into Slack');
 slack.login();
 
 slack.on('open', function() {
@@ -31,12 +34,12 @@ slack.on('message', function(message) {
     if(user && channel && message) {
         logger.debug('[' + channel.name + '] ' + user.name + ' : ' + message.text);
         // Send message to slothsandra
-        rest.post('http://localhost:9000/slothsandra/api/messages', {
+        rest.post(slothsandraBaseUrl + '/api/messages', {
             data: {
                 channelName: channel.name,
                 username: user.name,
                 message: message.text
-            },
+            }
         }).on('success', function(data, response) {
             if (response.statusCode == 201) {
                 logger.debug('Send message \"[' + channel.name + '] ' + user.name + ' : ' + message.text + '\" to slothsandra success');
