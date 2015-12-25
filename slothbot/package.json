@@ -3,9 +3,8 @@
   "version": "1.0.0",
   "devDependencies": {
     "slack-client": "1.5.1",
-    "express": "4.13.3",
-    "async": "1.5.0",
-    "mongodb": "2.0.45",
+    "winston": "2.1.1",
+    "restler": "3.4.0",
     "config": "1.17.1"
   }
 }
