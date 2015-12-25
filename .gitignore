@@ -2,4 +2,4 @@
 target/
 *.iml
 node_modules/
-slothbot/config/default.json
+config/default.json

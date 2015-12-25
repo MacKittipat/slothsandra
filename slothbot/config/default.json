@@ -1,0 +1,15 @@
+{
+  "slothbot": {
+    "slack": {
+      "token": "xoxb-17364172837-gy9e4ucam0hp6J5iHY8sDILf"
+    },
+    "winston": {
+      "log": {
+        "level": "debug"
+      }
+    },
+    "slothsandra": {
+      "base-url": "http://localhost:9000/slothsandra"
+    }
+  }
+}
