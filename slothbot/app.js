@@ -87,13 +87,14 @@ slack.on('message', function(message) {
     var user = slack.getUserByID(message.user);
     var channel = slack.getChannelGroupOrDMByID(message.channel);
     if(user && channel && message) {
-        logger.debug('[' + channel.name + '] ' + user.name + ' : ' + message.text);
+        logger.debug('[' + channel.name + ': ' + message.ts + '] ' + user.name + ' : ' + message.text);
         // Send message to Slothsandra
         rest.post(slothsandraBaseUrl + '/api/messages', {
             data: {
                 channelName: channel.name,
                 username: user.name,
-                message: message.text
+                message: message.text,
+                createdTime: message.ts
             }
         }).on('success', function(data, response) {
             if (response.statusCode == 201) {
