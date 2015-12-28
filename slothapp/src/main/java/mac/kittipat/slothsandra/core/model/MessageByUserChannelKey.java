@@ -6,6 +6,7 @@ import org.springframework.data.cassandra.mapping.PrimaryKeyClass;
 import org.springframework.data.cassandra.mapping.PrimaryKeyColumn;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.UUID;
 
 @PrimaryKeyClass
@@ -24,7 +25,7 @@ public class MessageByUserChannelKey implements Serializable {
     private UUID uuidTime;
 
     @PrimaryKeyColumn(name = "created_time", ordinal = 3, type = PrimaryKeyType.CLUSTERED, ordering = Ordering.DESCENDING)
-    private long createdTime;
+    private Date createdTime;
 
     public String getChannelName() {
         return channelName;
@@ -58,11 +59,11 @@ public class MessageByUserChannelKey implements Serializable {
         this.uuidTime = uuidTime;
     }
 
-    public long getCreatedTime() {
+    public Date getCreatedTime() {
         return createdTime;
     }
 
-    public void setCreatedTime(long createdTime) {
+    public void setCreatedTime(Date createdTime) {
         this.createdTime = createdTime;
     }
 }
