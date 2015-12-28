@@ -44,9 +44,14 @@ public class MessageRestController {
     @RequestMapping(value = "/messages", method = RequestMethod.POST)
     public ResponseEntity create(@RequestParam String channelName,
                                  @RequestParam String username,
-                                 @RequestParam String message) {
+                                 @RequestParam String message,
+                                 @RequestParam Double createdTime) {
 
-        messageDao.insert(channelName, username, slackMessageFormatter.toPlainText(message, channelIdMap, userIdMap));
+        messageDao.insert(
+                channelName,
+                username,
+                slackMessageFormatter.toPlainText(message, channelIdMap, userIdMap),
+                createdTime.longValue()*1000);
         return new ResponseEntity(HttpStatus.CREATED);
     }
 

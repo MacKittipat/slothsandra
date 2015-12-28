@@ -9,7 +9,6 @@ import org.springframework.data.cassandra.core.CassandraTemplate;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.UUID;
 
 @Repository
@@ -18,9 +17,8 @@ public class MessageDao {
     @Autowired
     private CassandraTemplate cassandraTemplate;
 
-    public void insert(String channelName, String username, String message) {
+    public void insert(String channelName, String username, String message, Long createdTime) {
 
-        Date date = new Date();
         int year = LocalDate.now().getYear();
         UUID uuidTime = UUIDs.timeBased();
 
@@ -32,7 +30,7 @@ public class MessageDao {
         insertMessageByChannel.value("channel_name", channelName);
         insertMessageByChannel.value("year", year);
         insertMessageByChannel.value("uuid_time", uuidTime);
-        insertMessageByChannel.value("created_time", date.getTime());
+        insertMessageByChannel.value("created_time", createdTime);
         insertMessageByChannel.value("username", username);
         insertMessageByChannel.value("message", message);
 
@@ -41,7 +39,7 @@ public class MessageDao {
         insertMessageByUserChannel.value("username", username);
         insertMessageByUserChannel.value("year", year);
         insertMessageByUserChannel.value("uuid_time", uuidTime);
-        insertMessageByUserChannel.value("created_time", date.getTime());
+        insertMessageByUserChannel.value("created_time", createdTime);
         insertMessageByUserChannel.value("message", message);
 
         // Use batch for atomicity. Keep data in all table consistency.
