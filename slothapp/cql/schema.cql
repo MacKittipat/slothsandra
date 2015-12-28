@@ -45,3 +45,10 @@ CREATE TABLE message_by_user_channel (
     PRIMARY KEY ((channel_name, username, year), uuid_time, created_time)
 )
 WITH CLUSTERING ORDER BY (uuid_time DESC, created_time DESC);
+
+CREATE TABLE year_by_channel (
+    channel_name text,
+    year int,
+    PRIMARY KEY ((channel_name), year)
+)
+WITH CLUSTERING ORDER BY (year DESC);

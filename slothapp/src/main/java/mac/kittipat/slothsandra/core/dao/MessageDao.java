@@ -42,11 +42,16 @@ public class MessageDao {
         insertMessageByUserChannel.value("created_time", createdTime);
         insertMessageByUserChannel.value("message", message);
 
+        Insert insertYearByChannel = QueryBuilder.insertInto("year_by_channel");
+        insertYearByChannel.value("channel_name", channelName);
+        insertYearByChannel.value("year", year);
+
         // Use batch for atomicity. Keep data in all table consistency.
         BatchStatement batch = new BatchStatement();
         batch.add(insertUserByChannel);
         batch.add(insertMessageByChannel);
         batch.add(insertMessageByUserChannel);
+        batch.add(insertYearByChannel);
 
         cassandraTemplate.execute(batch);
     }
