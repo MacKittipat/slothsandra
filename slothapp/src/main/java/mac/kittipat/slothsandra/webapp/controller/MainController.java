@@ -4,7 +4,6 @@ import mac.kittipat.slothsandra.core.dao.ChannelDao;
 import mac.kittipat.slothsandra.core.dao.MessageByChannelDao;
 import mac.kittipat.slothsandra.core.dao.UserByChannelDao;
 import mac.kittipat.slothsandra.core.model.Channel;
-import mac.kittipat.slothsandra.core.model.MessageByChannel;
 import mac.kittipat.slothsandra.core.model.UserByChannel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -41,9 +40,9 @@ public class MainController {
     @RequestMapping(value = "/channel/{channelName}")
     public String channel(Model model, @PathVariable String channelName) {
         List<UserByChannel> userByChannelList = userByChannelDao.findUserByChannel(channelName);
-        List<MessageByChannel> messageByChannelList = messageByChannelDao.findMessageByChannel(channelName);
+//        List<MessageByChannel> messageByChannelList = messageByChannelDao.findMessageByChannel(channelName);
         model.addAttribute("userByChannelList", userByChannelList);
-        model.addAttribute("messageByChannelList", messageByChannelList);
+//        model.addAttribute("messageByChannelList", messageByChannelList);
         return "channel";
     }
 

@@ -20,7 +20,8 @@ public class MessageDao {
     public void insert(String channelName, String username, String message, Long createdTime) {
 
         int year = LocalDate.now().getYear();
-        UUID uuidTime = UUIDs.timeBased();
+        // Use startOf because compare uuid_time<minTimeuuid()
+        UUID uuidTime = UUIDs.startOf(createdTime);
 
         Insert insertUserByChannel = QueryBuilder.insertInto("user_by_channel");
         insertUserByChannel.value("channel_name", channelName);

@@ -14,7 +14,7 @@ public class YearByChannelKey implements Serializable {
     private String channelName;
 
     @PrimaryKeyColumn(name = "year", ordinal = 1, type = PrimaryKeyType.CLUSTERED, ordering = Ordering.DESCENDING)
-    private String year;
+    private int year;
 
     public String getChannelName() {
         return channelName;
@@ -24,11 +24,11 @@ public class YearByChannelKey implements Serializable {
         this.channelName = channelName;
     }
 
-    public String getYear() {
+    public int getYear() {
         return year;
     }
 
-    public void setYear(String year) {
+    public void setYear(int year) {
         this.year = year;
     }
 }

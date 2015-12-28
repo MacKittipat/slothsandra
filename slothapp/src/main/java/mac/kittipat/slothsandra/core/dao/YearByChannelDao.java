@@ -17,6 +17,11 @@ public class YearByChannelDao {
         return cassandraTemplate.insert(yearByChannel);
     }
 
+    public List<YearByChannel> findByChannel(String channelName) {
+        String cql = "SELECT * FROM year_by_channel WHERE channel_name='" + channelName + "'";
+        return cassandraTemplate.select(cql, YearByChannel.class);
+    }
+
     public List<YearByChannel> findAll() {
         String cql = "SELECT * FROM year_by_channel";
         return cassandraTemplate.select(cql, YearByChannel.class);
