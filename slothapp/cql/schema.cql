@@ -26,20 +26,22 @@ WITH CLUSTERING ORDER BY (username ASC);
 
 CREATE TABLE message_by_channel (
     channel_name text,
+    year int,
     uuid_time timeuuid,
     created_time timestamp,
     username text,
     message text,
-    PRIMARY KEY ((channel_name), uuid_time, created_time)
+    PRIMARY KEY ((channel_name, year), uuid_time, created_time)
 )
 WITH CLUSTERING ORDER BY (uuid_time DESC, created_time DESC);
 
 CREATE TABLE message_by_user_channel (
     channel_name text,
     username text,
+    year int,
     uuid_time timeuuid,
     created_time timestamp,
     message text,
-    PRIMARY KEY ((channel_name, username), uuid_time, created_time)
+    PRIMARY KEY ((channel_name, username, year), uuid_time, created_time)
 )
 WITH CLUSTERING ORDER BY (uuid_time DESC, created_time DESC);

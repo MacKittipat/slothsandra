@@ -17,6 +17,9 @@ public class MessageByUserChannelKey implements Serializable {
     @PrimaryKeyColumn(name = "username", ordinal = 1, type = PrimaryKeyType.PARTITIONED)
     private String username;
 
+    @PrimaryKeyColumn(name = "year", ordinal = 1, type = PrimaryKeyType.PARTITIONED)
+    private int year;
+
     @PrimaryKeyColumn(name = "uuid_time", ordinal = 2, type = PrimaryKeyType.CLUSTERED, ordering = Ordering.DESCENDING)
     private UUID uuidTime;
 
@@ -37,6 +40,14 @@ public class MessageByUserChannelKey implements Serializable {
 
     public void setUsername(String username) {
         this.username = username;
+    }
+
+    public int getYear() {
+        return year;
+    }
+
+    public void setYear(int year) {
+        this.year = year;
     }
 
     public UUID getUuidTime() {

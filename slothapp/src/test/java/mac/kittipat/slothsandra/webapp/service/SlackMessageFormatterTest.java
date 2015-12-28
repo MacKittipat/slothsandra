@@ -6,6 +6,7 @@ import org.junit.runner.RunWith;
 import org.mockito.Spy;
 import org.mockito.runners.MockitoJUnitRunner;
 
+import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -17,6 +18,9 @@ public class SlackMessageFormatterTest {
 
     @Test
     public void testToPlainText() throws Exception {
+
+        System.out.println(LocalDate.now().getYear());
+
 
         Map<String, String> channelIdMap = new HashMap<>();
         channelIdMap.put("C0H1YRPRT", "general");

@@ -15,10 +15,13 @@ public class MessageByChannelKey implements Serializable {
     @PrimaryKeyColumn(name = "channel_name", ordinal = 0, type = PrimaryKeyType.PARTITIONED)
     private String channelName;
 
-    @PrimaryKeyColumn(name = "uuid_time", ordinal = 1, type = PrimaryKeyType.CLUSTERED, ordering = Ordering.DESCENDING)
+    @PrimaryKeyColumn(name = "year", ordinal = 1, type = PrimaryKeyType.PARTITIONED)
+    private int year;
+
+    @PrimaryKeyColumn(name = "uuid_time", ordinal = 2, type = PrimaryKeyType.CLUSTERED, ordering = Ordering.DESCENDING)
     private UUID uuidTime;
 
-    @PrimaryKeyColumn(name = "created_time", ordinal = 2, type = PrimaryKeyType.CLUSTERED, ordering = Ordering.DESCENDING)
+    @PrimaryKeyColumn(name = "created_time", ordinal = 3, type = PrimaryKeyType.CLUSTERED, ordering = Ordering.DESCENDING)
     private Date createdTime;
 
     public String getChannelName() {
@@ -27,6 +30,14 @@ public class MessageByChannelKey implements Serializable {
 
     public void setChannelName(String channelName) {
         this.channelName = channelName;
+    }
+
+    public int getYear() {
+        return year;
+    }
+
+    public void setYear(int year) {
+        this.year = year;
     }
 
     public UUID getUuidTime() {
