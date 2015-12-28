@@ -24,5 +24,13 @@
         </#list>
         </ul>
     </div>
+    <script type="text/javascript" src="/slothsandra/assets/jquery/jquery-2.1.4.min.js"></script>
+    <script type="text/javascript">
+        $(window).scroll(function() {
+            if($(window).scrollTop() + $(window).height() == $(document).height()) {
+                console.log("Scroll !!!")
+            }
+        });
+    </script>
 </body>
 </html>
