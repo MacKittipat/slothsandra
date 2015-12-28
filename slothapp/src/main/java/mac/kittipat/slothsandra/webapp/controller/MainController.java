@@ -76,6 +76,8 @@ public class MainController {
             yearIndex++;
         }
         model.addAttribute("messageByChannelList", messageByChannelList);
+        model.addAttribute("latestCreatedTime", messageByChannelList.get(messageByChannelList.size() - 1)
+                .getMessageByChannelKey().getCreatedTime().getTime());
         return "channel";
     }
 
