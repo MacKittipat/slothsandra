@@ -3,6 +3,7 @@ package mac.kittipat.slothsandra.webapp.controller.api;
 import mac.kittipat.slothsandra.core.dao.MessageByChannelDao;
 import mac.kittipat.slothsandra.core.dao.MessageByUserChannelDao;
 import mac.kittipat.slothsandra.core.dao.MessageDao;
+import mac.kittipat.slothsandra.webapp.service.SlackMessageFormatter;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -13,6 +14,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
+import static org.mockito.Matchers.anyLong;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.verify;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -32,6 +34,8 @@ public class MessageRestControllerTest {
     @Mock
     private MessageByUserChannelDao messageByUserChannelDao;
 
+    @Mock
+    private SlackMessageFormatter slackMessageFormatter;
 
     private MockMvc mockMvc;
 
@@ -46,10 +50,11 @@ public class MessageRestControllerTest {
         mockMvc.perform(MockMvcRequestBuilders.post("/api/messages")
                 .param("channelName", "general")
                 .param("username", "mac")
-                .param("message", "Hello!"))
+                .param("message", "Hello!")
+                .param("createdTime", "1451274445000"))
                 .andExpect(status().isCreated());
 
-        verify(messageDao).insert(anyString(), anyString(), anyString());
+        verify(messageDao).insert(anyString(), anyString(), anyString(), anyLong());
     }
 
     @Test
