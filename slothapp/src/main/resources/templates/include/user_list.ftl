@@ -1,5 +1,5 @@
-<div class="col s2">
+<div class="collection">
     <#list userByChannelList as userByChannel>
-        <div><a href="/slothsandra/channel/${channelName}/user/${userByChannel.userByChannelKey.username}">${userByChannel.userByChannelKey.username}</a></div>
+        <a href="/slothsandra/channel/${channelName}/user/${userByChannel.userByChannelKey.username}" class="collection-item">${userByChannel.userByChannelKey.username}</a>
     </#list>
 </div>

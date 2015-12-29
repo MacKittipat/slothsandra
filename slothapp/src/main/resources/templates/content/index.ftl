@@ -1,15 +1,15 @@
 <div class="row">
     <div class="col s12">
-        <h1>
-            Slothsandra
-        </h1>
+        <h3>
+            Channels
+        </h3>
     </div>
     <div class="col s12">
-        <ul>
+        <div class="collection">
             <#list channelList as channel>
-                <li><a href="/slothsandra/channel/${channel.channelKey.channelName}">${channel.channelKey.channelName}</a></li>
+                <a href="/slothsandra/channel/${channel.channelKey.channelName}" class="collection-item">${channel.channelKey.channelName}</a>
             </#list>
-        </ul>
+        </div>
     </div>
 </div>
 

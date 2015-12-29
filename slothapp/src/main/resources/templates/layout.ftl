@@ -9,7 +9,17 @@
 </head>
 <body>
     <div class="container">
+
+        <div class="col s12">
+            <h1>
+                <a href="/slothsandra/">Slothsandra</a>
+            </h1>
+        </div>
+
+        <div class="divider"></div>
+
         <#include "content/${contentPath}">
+
     </div>
 </body>
 </html>

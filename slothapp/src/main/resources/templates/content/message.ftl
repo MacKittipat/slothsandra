@@ -1,10 +1,7 @@
 <div class="row">
-    <div class="col s12">
-        <h1>
-            Slothsandra : ${channelName}
-        </h1>
+    <div class="col s2">
+        <#include "../include/user_list.ftl">
     </div>
-    <#include "../include/user_list.ftl">
     <div class="col s10">
         <div id="messages-list">
         </div>
@@ -29,13 +26,12 @@
     }
 
     $(document).ready(function() {
-        $.get('http://localhost:9000/slothsandra/api/channels/${channelName}/users/${username}/messages', displayMessageCallback);
+        $.get('${restRetrieveMessagePath}', displayMessageCallback);
     });
 
     $(window).scroll(function() {
-        console.log('Scroll to button');
         if($(window).scrollTop() + $(window).height() == $(document).height() && latestCreatedTime != 0) {
-            $.get('http://localhost:9000/slothsandra/api/channels/${channelName}/users/${username}/messages?createdTime=' + latestCreatedTime, displayMessageCallback);
+            $.get('${restRetrieveMessagePath}?createdTime=' + latestCreatedTime, displayMessageCallback);
         }
     });
 

@@ -38,7 +38,8 @@ public class MainController {
                           @PathVariable String channelName) {
         List<UserByChannel> userByChannelList = userByChannelDao.findUserByChannel(channelName);
         model.addAttribute("userByChannelList", userByChannelList);
-        model.addAttribute("contentPath", "channel.ftl");
+        model.addAttribute("restRetrieveMessagePath", "/slothsandra/api/channels/" + channelName + "/messages");
+        model.addAttribute("contentPath", "message.ftl");
         return "layout";
     }
 
@@ -48,7 +49,8 @@ public class MainController {
                               @PathVariable String username) {
         List<UserByChannel> userByChannelList = userByChannelDao.findUserByChannel(channelName);
         model.addAttribute("userByChannelList", userByChannelList);
-        model.addAttribute("contentPath", "user_channel.ftl");
+        model.addAttribute("restRetrieveMessagePath", "/slothsandra/api/channels/" + channelName + "/users/" + username + "/messages");
+        model.addAttribute("contentPath", "message.ftl");
         return "layout";
     }
 }
