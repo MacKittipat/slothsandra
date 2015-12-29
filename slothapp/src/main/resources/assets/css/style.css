@@ -1,0 +1,23 @@
+html {
+    font-size: large;
+}
+.message-box {
+    margin-bottom: 10px;
+}
+.message-box .message-username {
+    font-weight: bold;
+}
+.message-box .message-time {
+    color: #bdbdbd;
+    font-size: small;
+}
+.message-box .message-content {
+    word-wrap: break-word;
+}
+.collection a.collection-item {
+    color: #039be5;
+}
+.breadcrumb-box {
+    margin-top: 20px;
+    margin-bottom: 10px;
+}
