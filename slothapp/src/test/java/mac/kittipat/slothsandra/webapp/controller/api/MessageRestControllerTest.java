@@ -1,11 +1,10 @@
 package mac.kittipat.slothsandra.webapp.controller.api;
 
+import mac.kittipat.slothsandra.core.bean.MessageBean;
 import mac.kittipat.slothsandra.core.dao.MessageByChannelDao;
 import mac.kittipat.slothsandra.core.dao.MessageByUserChannelDao;
 import mac.kittipat.slothsandra.core.dao.MessageDao;
 import mac.kittipat.slothsandra.core.dao.YearByChannelDao;
-import mac.kittipat.slothsandra.core.model.MessageByChannel;
-import mac.kittipat.slothsandra.core.model.MessageByChannelKey;
 import mac.kittipat.slothsandra.core.model.YearByChannel;
 import mac.kittipat.slothsandra.core.model.YearByChannelKey;
 import mac.kittipat.slothsandra.webapp.service.SlackMessageFormatter;
@@ -70,7 +69,7 @@ public class MessageRestControllerTest {
         verify(messageDao).insert(anyString(), anyString(), anyString(), anyLong());
     }
 
-        @Test
+    @Test
     public void testFindByChannel() throws Exception {
 
         List<YearByChannel> yearByChannelList = new ArrayList<>();
@@ -92,39 +91,22 @@ public class MessageRestControllerTest {
 
         when(yearByChannelDao.findByChannel(anyString())).thenReturn(yearByChannelList);
 
-        MessageByChannelKey messageByChannelKey1 = new MessageByChannelKey();
-        messageByChannelKey1.setChannelName("general");
-        messageByChannelKey1.setYear(2015);
-        MessageByChannel messageByChannel1 = new MessageByChannel();
-        messageByChannel1.setMessageByChannelKey(messageByChannelKey1);
-        messageByChannel1.setMessage("333");
-        messageByChannel1.setUsername("mac");
+        MessageBean messageBean1 = new MessageBean();
+        messageBean1.setMessage("333");
+        MessageBean messageBean2 = new MessageBean();
+        messageBean2.setMessage("222");
+        MessageBean messageBean3 = new MessageBean();
+        messageBean3.setMessage("111");
 
-        MessageByChannelKey messageByChannelKey2 = new MessageByChannelKey();
-        messageByChannelKey2.setChannelName("general");
-        messageByChannelKey2.setYear(2015);
-        MessageByChannel messageByChannel2 = new MessageByChannel();
-        messageByChannel2.setMessageByChannelKey(messageByChannelKey2);
-        messageByChannel2.setMessage("222");
-        messageByChannel2.setUsername("mac");
+        List<MessageBean> messageBeenList1 = new ArrayList<>();
+        messageBeenList1.add(messageBean1);
+        messageBeenList1.add(messageBean2);
 
-        MessageByChannelKey messageByChannelKey3 = new MessageByChannelKey();
-        messageByChannelKey3.setChannelName("general");
-        messageByChannelKey3.setYear(2014);
-        MessageByChannel messageByChannel3 = new MessageByChannel();
-        messageByChannel3.setMessageByChannelKey(messageByChannelKey3);
-        messageByChannel3.setMessage("111");
-        messageByChannel3.setUsername("mac");
-
-        List<MessageByChannel> messageByChannelList1 = new ArrayList<>();
-        messageByChannelList1.add(messageByChannel1);
-        messageByChannelList1.add(messageByChannel2);
-
-        List<MessageByChannel> messageByChannelList2 = new ArrayList<>();
-        messageByChannelList2.add(messageByChannel3);
+        List<MessageBean> messageBeenList2 = new ArrayList<>();
+        messageBeenList2.add(messageBean3);
 
         when(messageByChannelDao.findMessageByChannel(anyString(), anyInt(), anyLong(), anyInt()))
-                .thenReturn(messageByChannelList1, messageByChannelList2);
+                .thenReturn(messageBeenList1, messageBeenList2);
 
         mockMvc.perform(MockMvcRequestBuilders.get("/api/channels/general/messages")
                 .param("limit", "3"))

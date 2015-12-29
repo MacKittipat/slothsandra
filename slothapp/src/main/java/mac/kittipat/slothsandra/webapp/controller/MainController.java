@@ -1,9 +1,7 @@
 package mac.kittipat.slothsandra.webapp.controller;
 
 import mac.kittipat.slothsandra.core.dao.ChannelDao;
-import mac.kittipat.slothsandra.core.dao.MessageByChannelDao;
 import mac.kittipat.slothsandra.core.dao.UserByChannelDao;
-import mac.kittipat.slothsandra.core.dao.YearByChannelDao;
 import mac.kittipat.slothsandra.core.model.Channel;
 import mac.kittipat.slothsandra.core.model.UserByChannel;
 import org.slf4j.Logger;
@@ -21,19 +19,11 @@ public class MainController {
 
     private static final Logger log = LoggerFactory.getLogger(MainController.class);
 
-    private static final int DEFAULT_LIMIT = 50;
-
     @Autowired
     private ChannelDao channelDao;
 
     @Autowired
     private UserByChannelDao userByChannelDao;
-
-    @Autowired
-    private MessageByChannelDao messageByChannelDao;
-
-    @Autowired
-    private YearByChannelDao yearByChannelDao;
 
     @RequestMapping(value = "/")
     public String index(Model model) {

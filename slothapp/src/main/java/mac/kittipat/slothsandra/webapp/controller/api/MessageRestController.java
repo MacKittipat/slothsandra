@@ -1,10 +1,10 @@
 package mac.kittipat.slothsandra.webapp.controller.api;
 
+import mac.kittipat.slothsandra.core.bean.MessageBean;
 import mac.kittipat.slothsandra.core.dao.MessageByChannelDao;
 import mac.kittipat.slothsandra.core.dao.MessageByUserChannelDao;
 import mac.kittipat.slothsandra.core.dao.MessageDao;
 import mac.kittipat.slothsandra.core.dao.YearByChannelDao;
-import mac.kittipat.slothsandra.core.model.MessageByChannel;
 import mac.kittipat.slothsandra.core.model.MessageByUserChannel;
 import mac.kittipat.slothsandra.core.model.YearByChannel;
 import mac.kittipat.slothsandra.webapp.service.SlackMessageFormatter;
@@ -65,7 +65,7 @@ public class MessageRestController {
     }
 
     @RequestMapping(value = "/channels/{channelName}/messages", method = RequestMethod.GET)
-    public ResponseEntity<List<MessageByChannel>> findByChannel(@PathVariable String channelName,
+    public ResponseEntity<List<MessageBean>> findByChannel(@PathVariable String channelName,
                                                                 @RequestParam(required = false) Long createdTime,
                                                                 @RequestParam(required = false) Integer limit) {
 
@@ -78,9 +78,9 @@ public class MessageRestController {
 
         int yearIndex = 0;
         List<YearByChannel> yearByChannelList = yearByChannelDao.findByChannel(channelName);
-        List<MessageByChannel> messageByChannelList = new ArrayList<>();
+        List<MessageBean> messageByChannelList = new ArrayList<>();
         while (messageByChannelList.size() < limit && yearIndex < yearByChannelList.size()) {
-            List<MessageByChannel> messageByChannelListTemp =
+            List<MessageBean> messageByChannelListTemp =
                     messageByChannelDao.findMessageByChannel(
                             channelName,
                             yearByChannelList.get(yearIndex).getYearByChannelKey().getYear(),

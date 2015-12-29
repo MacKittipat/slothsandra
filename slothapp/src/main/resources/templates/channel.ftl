@@ -28,10 +28,10 @@
 
         var cb = function(data) {
             for(var i=0; i<data.length; i++) {
-                $('#messages-list').append('<li>(' + data[i].messageByChannelKey.createdTime + ') ' + data[i].username + ' : ' + escapeHtml(data[i].message) + '</li>')
+                $('#messages-list').append('<li>(' + data[i].readableCreatedTime + ') ' + data[i].username + ' : ' + data[i].escapedMessage + '</li>')
             }
             if(data.length > 0) {
-                latestCreatedTime =  data[data.length - 1].messageByChannelKey.createdTime;
+                latestCreatedTime =  data[data.length - 1].createdTime;
             } else {
                 latestCreatedTime = 0;
             }
@@ -47,14 +47,6 @@
             }
         });
 
-        function escapeHtml(unsafe) {
-            return unsafe
-                    .replace(/&/g, "&amp;")
-                    .replace(/</g, "&lt;")
-                    .replace(/>/g, "&gt;")
-                    .replace(/"/g, "&quot;")
-                    .replace(/'/g, "&#039;");
-        }
     </script>
 </body>
 </html>
