@@ -116,9 +116,43 @@ public class MessageRestControllerTest {
     @Test
     public void testFindByUserChannel() throws Exception {
 
+        List<YearByChannel> yearByChannelList = new ArrayList<>();
+
+        YearByChannelKey yearByChannelKey1 = new YearByChannelKey();
+        yearByChannelKey1.setChannelName("general");
+        yearByChannelKey1.setYear(2015);
+        YearByChannel yearByChannel1 = new YearByChannel();
+        yearByChannel1.setYearByChannelKey(yearByChannelKey1);
+
+        YearByChannelKey yearByChannelKey2 = new YearByChannelKey();
+        yearByChannelKey2.setChannelName("general");
+        yearByChannelKey2.setYear(2014);
+        YearByChannel yearByChannel2 = new YearByChannel();
+        yearByChannel2.setYearByChannelKey(yearByChannelKey2);
+
+        yearByChannelList.add(yearByChannel1);
+        yearByChannelList.add(yearByChannel2);
+
+        when(yearByChannelDao.findByChannel(anyString())).thenReturn(yearByChannelList);
+
+        MessageBean messageBean1 = new MessageBean();
+        messageBean1.setMessage("333");
+        MessageBean messageBean2 = new MessageBean();
+        messageBean2.setMessage("222");
+        MessageBean messageBean3 = new MessageBean();
+        messageBean3.setMessage("111");
+
+        List<MessageBean> messageBeenList1 = new ArrayList<>();
+        messageBeenList1.add(messageBean1);
+        messageBeenList1.add(messageBean2);
+
+        List<MessageBean> messageBeenList2 = new ArrayList<>();
+        messageBeenList2.add(messageBean3);
+
+        when(messageByUserChannelDao.findMessageByUserChannel(anyString(), anyString(), anyInt(), anyLong(), anyInt()))
+                .thenReturn(messageBeenList1, messageBeenList2);
+
         mockMvc.perform(MockMvcRequestBuilders.get("/api/channels/general/users/mac/messages"))
                 .andExpect(status().isOk());
-
-        verify(messageByUserChannelDao).findMessageByUserChannel(anyString(), anyString());
     }
 }
