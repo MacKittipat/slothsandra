@@ -50,6 +50,9 @@ public class MessageRestController {
     @Resource
     private Map<String, String> userIdMap;
 
+    /**
+     * createdTime from Slack is not millisecond. Convert to millisecond by multiply by 1000.
+     */
     @RequestMapping(value = "/messages", method = RequestMethod.POST)
     public ResponseEntity create(@RequestParam String channelName,
                                  @RequestParam String username,
@@ -66,8 +69,8 @@ public class MessageRestController {
 
     @RequestMapping(value = "/channels/{channelName}/messages", method = RequestMethod.GET)
     public ResponseEntity<List<MessageBean>> findByChannel(@PathVariable String channelName,
-                                                                @RequestParam(required = false) Long createdTime,
-                                                                @RequestParam(required = false) Integer limit) {
+                                                           @RequestParam(required = false) Long createdTime,
+                                                           @RequestParam(required = false) Integer limit) {
 
         if(createdTime == null) {
             createdTime = Instant.now().toEpochMilli();
