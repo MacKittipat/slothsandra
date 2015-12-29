@@ -5,7 +5,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.cassandra.core.CassandraTemplate;
 import org.springframework.stereotype.Repository;
 
+import javax.annotation.Resource;
 import java.util.List;
+import java.util.Map;
 
 @Repository
 public class UserDao {
@@ -13,8 +15,16 @@ public class UserDao {
     @Autowired
     private CassandraTemplate cassandraTemplate;
 
+    @Resource
+    private Map<String, String> userIdMap;
+
     public User insert(User user) {
-        return cassandraTemplate.insert(user);
+        cassandraTemplate.insert(user);
+
+        // Add new user to userIdMap
+        userIdMap.put(user.getUserKey().getUserId(), user.getUserKey().getUsername());
+
+        return user;
     }
 
     public List<User> findAll() {

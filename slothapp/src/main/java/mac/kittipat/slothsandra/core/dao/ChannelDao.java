@@ -7,13 +7,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.cassandra.core.CassandraTemplate;
 import org.springframework.stereotype.Repository;
 
+import javax.annotation.Resource;
 import java.util.List;
+import java.util.Map;
 
 @Repository
 public class ChannelDao {
 
     @Autowired
     private CassandraTemplate cassandraTemplate;
+
+    @Resource
+    private Map<String, String> channelIdMap;
 
     public Channel insert(Channel channel) {
         // Use update because this table have counter column. insert does not work if table have counter column.
@@ -23,6 +28,10 @@ public class ChannelDao {
         update.where(QueryBuilder.eq("channel_name", channel.getChannelKey().getChannelName()));
         update.where(QueryBuilder.eq("channel_id", channel.getChannelKey().getChannelId()));
         cassandraTemplate.execute(update);
+
+        // Add new channel to channelIdMap
+        channelIdMap.put(channel.getChannelKey().getChannelId(), channel.getChannelKey().getChannelName());
+
         return channel;
     }
 
