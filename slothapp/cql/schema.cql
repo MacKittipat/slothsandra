@@ -5,6 +5,7 @@ CREATE TABLE channel (
     slack_name text,
     channel_name text,
     channel_id text,
+    count_message counter,
     PRIMARY KEY ((slack_name), channel_name, channel_id)
 )
 WITH CLUSTERING ORDER BY (channel_name ASC, channel_id ASC);
@@ -20,6 +21,7 @@ WITH CLUSTERING ORDER BY (username ASC, user_id ASC);
 CREATE TABLE user_by_channel (
     channel_name text,
     username text,
+    count_message counter,
     PRIMARY KEY ((channel_name), username)
 )
 WITH CLUSTERING ORDER BY (username ASC);
