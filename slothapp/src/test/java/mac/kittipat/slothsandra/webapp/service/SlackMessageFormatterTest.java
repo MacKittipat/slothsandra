@@ -45,6 +45,12 @@ public class SlackMessageFormatterTest {
         plainText = slackMessageFormatter.toPlainText("@U10UTDN0J", channelIdMap, userIdMap);
         Assert.assertEquals("@U10UTDN0J", plainText);
 
+        plainText = slackMessageFormatter.toPlainText("<@U09UTDN0J|Aaa>", channelIdMap, userIdMap);
+        Assert.assertEquals("Aaa", plainText);
+
+        plainText = slackMessageFormatter.toPlainText("test<@U09UTDN0J|Aaa> test", channelIdMap, userIdMap);
+        Assert.assertEquals("testAaa test", plainText);
+
         plainText = slackMessageFormatter.toPlainText("Hello <@U10UTDN0J> are you in <#C0H1YRPRT>", channelIdMap, userIdMap);
         Assert.assertEquals("Hello Aaa are you in general", plainText);
 
