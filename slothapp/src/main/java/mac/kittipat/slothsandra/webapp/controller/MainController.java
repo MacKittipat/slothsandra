@@ -29,7 +29,8 @@ public class MainController {
     public String index(Model model) {
         List<Channel> channelList = channelDao.findAll();
         model.addAttribute("channelList", channelList);
-        return "index";
+        model.addAttribute("contentPath", "index.ftl");
+        return "layout";
     }
 
     @RequestMapping(value = "/channel/{channelName}")
@@ -37,7 +38,8 @@ public class MainController {
                           @PathVariable String channelName) {
         List<UserByChannel> userByChannelList = userByChannelDao.findUserByChannel(channelName);
         model.addAttribute("userByChannelList", userByChannelList);
-        return "channel";
+        model.addAttribute("contentPath", "channel.ftl");
+        return "layout";
     }
 
 }
