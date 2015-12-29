@@ -42,4 +42,13 @@ public class MainController {
         return "layout";
     }
 
+    @RequestMapping(value = "/channel/{channelName}/user/{username}")
+    public String userChannel(Model model,
+                              @PathVariable String channelName,
+                              @PathVariable String username) {
+        List<UserByChannel> userByChannelList = userByChannelDao.findUserByChannel(channelName);
+        model.addAttribute("userByChannelList", userByChannelList);
+        model.addAttribute("contentPath", "user_channel.ftl");
+        return "layout";
+    }
 }

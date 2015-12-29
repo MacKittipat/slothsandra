@@ -9,7 +9,7 @@
 </head>
 <body>
     <div class="container">
-        <#include "${contentPath}">
+        <#include "content/${contentPath}">
     </div>
 </body>
 </html>

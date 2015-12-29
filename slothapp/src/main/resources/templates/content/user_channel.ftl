@@ -4,13 +4,7 @@
             Slothsandra : ${channelName}
         </h1>
     </div>
-    <div class="col s2">
-
-            <#list userByChannelList as userByChannel>
-                <div>${userByChannel.userByChannelKey.username}</div>
-            </#list>
-
-    </div>
+    <#include "../include/user_list.ftl">
     <div class="col s10">
         <div id="messages-list">
         </div>
@@ -35,13 +29,13 @@
     }
 
     $(document).ready(function() {
-        $.get('http://localhost:9000/slothsandra/api/channels/${channelName}/messages', displayMessageCallback);
+        $.get('http://localhost:9000/slothsandra/api/channels/${channelName}/users/${username}/messages', displayMessageCallback);
     });
 
     $(window).scroll(function() {
         console.log('Scroll to button');
         if($(window).scrollTop() + $(window).height() == $(document).height() && latestCreatedTime != 0) {
-            $.get('http://localhost:9000/slothsandra/api/channels/${channelName}/messages?createdTime=' + latestCreatedTime, displayMessageCallback);
+            $.get('http://localhost:9000/slothsandra/api/channels/${channelName}/users/${username}/messages?createdTime=' + latestCreatedTime, displayMessageCallback);
         }
     });
 
