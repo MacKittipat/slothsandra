@@ -5,7 +5,6 @@ import mac.kittipat.slothsandra.core.dao.MessageByChannelDao;
 import mac.kittipat.slothsandra.core.dao.MessageByUserChannelDao;
 import mac.kittipat.slothsandra.core.dao.MessageDao;
 import mac.kittipat.slothsandra.core.dao.YearByChannelDao;
-import mac.kittipat.slothsandra.core.model.MessageByUserChannel;
 import mac.kittipat.slothsandra.core.model.YearByChannel;
 import mac.kittipat.slothsandra.webapp.service.SlackMessageFormatter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -81,25 +80,49 @@ public class MessageRestController {
 
         int yearIndex = 0;
         List<YearByChannel> yearByChannelList = yearByChannelDao.findByChannel(channelName);
-        List<MessageBean> messageByChannelList = new ArrayList<>();
-        while (messageByChannelList.size() < limit && yearIndex < yearByChannelList.size()) {
-            List<MessageBean> messageByChannelListTemp =
+        List<MessageBean> messageBeanList = new ArrayList<>();
+        while (messageBeanList.size() < limit && yearIndex < yearByChannelList.size()) {
+            List<MessageBean> messageBeanTempList =
                     messageByChannelDao.findMessageByChannel(
                             channelName,
                             yearByChannelList.get(yearIndex).getYearByChannelKey().getYear(),
                             createdTime,
-                            limit - messageByChannelList.size());
-            messageByChannelList.addAll(messageByChannelListTemp);
+                            limit - messageBeanList.size());
+            messageBeanList.addAll(messageBeanTempList);
             yearIndex++;
         }
 
-        return new ResponseEntity<>(messageByChannelList, HttpStatus.OK);
+        return new ResponseEntity<>(messageBeanList, HttpStatus.OK);
     }
 
     @RequestMapping(value = "/channels/{channelName}/users/{username}/messages", method = RequestMethod.GET)
-    public ResponseEntity<List<MessageByUserChannel>> findByUserChannel(@PathVariable String channelName,
-                                                                        @PathVariable String username) {
+    public ResponseEntity<List<MessageBean>> findByUserChannel(@PathVariable String channelName,
+                                                               @PathVariable String username,
+                                                               @RequestParam(required = false) Long createdTime,
+                                                               @RequestParam(required = false) Integer limit) {
 
-        return new ResponseEntity<>(messageByUserChannelDao.findMessageByUserChannel(username, channelName), HttpStatus.OK);
+        if(createdTime == null) {
+            createdTime = Instant.now().toEpochMilli();
+        }
+        if(limit == null) {
+            limit = DEFAULT_LIMIT;
+        }
+
+        int yearIndex = 0;
+        List<YearByChannel> yearByChannelList = yearByChannelDao.findByChannel(channelName);
+        List<MessageBean> messageBeanList = new ArrayList<>();
+        while (messageBeanList.size() < limit && yearIndex < yearByChannelList.size()) {
+            List<MessageBean> messageBeanTempList =
+                    messageByUserChannelDao.findMessageByUserChannel(
+                            username,
+                            channelName,
+                            yearByChannelList.get(yearIndex).getYearByChannelKey().getYear(),
+                            createdTime,
+                            limit - messageBeanList.size());
+            messageBeanList.addAll(messageBeanTempList);
+            yearIndex++;
+        }
+
+        return new ResponseEntity<>(messageBeanList, HttpStatus.OK);
     }
 }
