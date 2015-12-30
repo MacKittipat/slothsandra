@@ -2,6 +2,7 @@ package mac.kittipat.slothsandra.core.dao;
 
 import mac.kittipat.slothsandra.core.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.cassandra.core.CassandraTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -18,7 +19,11 @@ public class UserDao {
     @Resource
     private Map<String, String> userIdMap;
 
+    @Value("${slothsandra.slack-name}")
+    private String slackName;
+
     public User insert(User user) {
+        user.getUserKey().setSlackName(slackName);
         cassandraTemplate.insert(user);
 
         // Add new user to userIdMap
