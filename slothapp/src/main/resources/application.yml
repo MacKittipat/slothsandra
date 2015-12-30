@@ -8,3 +8,8 @@ spring:
 
 slothsandra:
   slack-name: abctech
+
+db:
+  host: 127.0.0.1
+  port: 9042
+  keyspace-name: slothsandra

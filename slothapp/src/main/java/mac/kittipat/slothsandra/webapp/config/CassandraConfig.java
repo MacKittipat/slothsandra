@@ -1,5 +1,6 @@
 package mac.kittipat.slothsandra.webapp.config;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.cassandra.config.CassandraClusterFactoryBean;
@@ -15,11 +16,20 @@ import org.springframework.data.cassandra.mapping.CassandraMappingContext;
 @Configuration
 public class CassandraConfig {
 
+    @Value("${db.host}")
+    private String host;
+
+    @Value("${db.port}")
+    private int port;
+
+    @Value("${db.keyspace-name}")
+    private String keyspaceName;
+
     @Bean
     public CassandraClusterFactoryBean cluster() {
         CassandraClusterFactoryBean cluster = new CassandraClusterFactoryBean();
-        cluster.setContactPoints("127.0.0.1");
-        cluster.setPort(9042);
+        cluster.setContactPoints(host);
+        cluster.setPort(port);
         return cluster;
     }
 
@@ -37,7 +47,7 @@ public class CassandraConfig {
     public CassandraSessionFactoryBean session() throws Exception {
         CassandraSessionFactoryBean session = new CassandraSessionFactoryBean();
         session.setCluster(cluster().getObject());
-        session.setKeyspaceName("slothsandra");
+        session.setKeyspaceName(keyspaceName);
         session.setConverter(converter());
         session.setSchemaAction(SchemaAction.NONE);
         return session;
