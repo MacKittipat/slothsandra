@@ -20,6 +20,9 @@ public class MessageByUserChannelDao {
     @Autowired
     private CassandraTemplate cassandraTemplate;
 
+    @Autowired
+    private MessageBeanRowMapper messageBeanRowMapper;
+
     public MessageByUserChannel insert(MessageByUserChannel messageByUserChannel) {
         return cassandraTemplate.insert(messageByUserChannel);
     }
@@ -32,6 +35,6 @@ public class MessageByUserChannelDao {
                 " AND uuid_time < " + UUIDs.startOf(createdTime) +
                 " LIMIT " + limit;
         log.info("CQL : {}", cql);
-        return cassandraTemplate.query(cql, MessageBeanRowMapper::mapRow);
+        return cassandraTemplate.query(cql, messageBeanRowMapper::mapRow);
     }
 }
