@@ -5,3 +5,6 @@ server:
 spring:
   freemarker:
     cache: false
+
+slothsandra:
+  slack-name: abctech

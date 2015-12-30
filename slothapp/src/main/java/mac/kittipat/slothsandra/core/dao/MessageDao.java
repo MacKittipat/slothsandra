@@ -6,6 +6,7 @@ import com.datastax.driver.core.querybuilder.QueryBuilder;
 import com.datastax.driver.core.querybuilder.Update;
 import com.datastax.driver.core.utils.UUIDs;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.cassandra.core.CassandraTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -23,6 +24,9 @@ public class MessageDao {
     @Resource
     private Map<String, String> channelIdMap;
 
+    @Value("${slothsandra.slack-name}")
+    private String slackName;
+
     public void insert(String channelName, String username, String message, Long createdTime) {
 
         int year = LocalDate.now().getYear();
@@ -35,7 +39,7 @@ public class MessageDao {
         // and counter does not work with LOGGED batch.
         Update updateCounterChannel = QueryBuilder.update("channel");
         updateCounterChannel.with(QueryBuilder.incr("count_message", 1));
-        updateCounterChannel.where(QueryBuilder.eq("slack_name", "abctech"));
+        updateCounterChannel.where(QueryBuilder.eq("slack_name", slackName));
         updateCounterChannel.where(QueryBuilder.eq("channel_name", channelName));
         updateCounterChannel.where(QueryBuilder.eq("channel_id", findChannelIdByChannelName(channelName)));
 
