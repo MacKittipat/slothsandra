@@ -27,7 +27,6 @@ slack._apiCall('channels.list', {'token':token}, function(data) {
             if(slackChannel.is_member) {
                 slackChannels.push({
                     'channelKey': {
-                        'slackName': 'abctech',
                         'channelId': slackChannel.id,
                         'channelName': slackChannel.name
                     }
@@ -54,7 +53,6 @@ slack._apiCall('users.list', {'token':token}, function(data) {
             var slackUser = data.members[i];
             slackUsers.push({
                 'userKey': {
-                    'slackName': 'abctech',
                     'userId': slackUser.id,
                     'username': slackUser.name
                 }
