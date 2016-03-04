@@ -1,0 +1,48 @@
+PUT slothsandra
+{
+  "mappings": {
+    "slothmessage": {
+      "properties": {
+        "channel_name": {
+          "type": "string",
+          "fields": {
+            "raw": { "type": "string", "index": "not_analyzed" }
+          }
+        },
+        "username" : {
+          "type": "string",
+          "fields": {
+            "raw": { "type": "string", "index": "not_analyzed" }
+          }
+        },
+        "message" : {
+          "type": "string",
+          "analyzer": "thai"
+        },
+        "created_time" : {
+          "type": "date"
+        },
+        "created_year" : {
+          "type": "short"
+        },
+        "created_month" : {
+          "type": "string",
+          "index": "not_analyzed"
+        },
+        "created_day_of_week" : {
+          "type": "string",
+          "index": "not_analyzed"
+        },
+        "created_hour" : {
+          "type": "short"
+        }
+      }
+    }
+  }
+}
+
+/**
+ Required field
+  - Month number
+  - Tagged username
+*/

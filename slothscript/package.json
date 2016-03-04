@@ -3,6 +3,8 @@
   "version": "1.0.0",
   "devDependencies": {
     "restler": "3.4.0",
-    "slack-client": "1.5.1"
+    "slack-client": "1.5.1",
+    "cassandra-driver": "3.0.1",
+    "elasticsearch": "10.1.3"
   }
 }
