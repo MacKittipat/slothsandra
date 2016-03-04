@@ -27,7 +27,7 @@
 var rest    = require('restler');
 var Slack   = require('slack-client');
 
-var token = 'xoxb-17364172837-W77ecUAFTsQZJ3tJYUTMGQhK';
+var token = '';
 var slack = new Slack(token, true, true);
 
 var channelNameId = "C0476BL03";
