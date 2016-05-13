@@ -1,6 +1,8 @@
 # Slothsandra
 Slack (Sloth) + Cassandra : Experiment with Slack API and Apache Cassandra
 
+Written in Java and Node.js
+
 https://slack.com/ is a great chat application but it's free version has limitation. 
 Free version keep 10,000 most recent message so we cannot look up for very old message.
 
